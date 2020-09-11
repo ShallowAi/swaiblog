@@ -121,7 +121,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">4</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">5</span></a>
 
   </li>
   </ul>
@@ -143,6 +143,102 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://swai.top/share-ckexnwfbs0000hg4le1l23afi.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ShallowAi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShallowAi's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/share-ckexnwfbs0000hg4le1l23afi.html" class="post-title-link" itemprop="url">免拆机开启小米路由器Telnet FTP 安装科学工具箱</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-18 17:59:01" itemprop="dateCreated datePublished" datetime="2020-07-18T17:59:01+08:00">2020-07-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-11 11:09:11" itemprop="dateModified" datetime="2020-09-11T11:09:11+08:00">2020-09-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/share/" itemprop="url" rel="index"><span itemprop="name">技术分享</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>基于小米路由器的Shell漏洞利用, 一键开启小米路由器Telnet FTP, 安装 </p>
+<p> 以实现科学上网及更多功能.</p>
+<h2 id="支持设备"><a href="#支持设备" class="headerlink" title="支持设备"></a>支持设备</h2><ul>
+<li>小米路由器 4A/4C/4Q/4</li>
+<li>小米路由器 3Gv2</li>
+<li>小米路由器 3C</li>
+</ul>
+<h3 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h3><p>Python3</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>首先从这里 <a href="https://github.com/acecilia/OpenWRTInvasion/releases" target="_blank" rel="noopener">https://github.com/acecilia/OpenWRTInvasion/releases</a> 下载最新的 Release 包.</p>
+<p>下载后解压到任意文件夹，打开文件夹 按下 <code>Shift+右键</code> 选择 <code>在此处打开 PowerShell 窗口</code>或<code>在此处打开 命令提示符</code></p>
+<p>运行指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br><span class="line">python3 remote_command_execution_vulnerability.py</span><br></pre></td></tr></table></figure>
+
+<p>会要求输入路由器的IP地址以及stok</p>
+<p><img data-src="http://cdn.jsdelivr.net/gh/acecilia/OpenWRTInvasion@0.0.3/readme/exploit-002.gif" alt=""></p>
+<p>完成后Telnet即已开启</p>
+<p>使用Telnet工具链接即可 <code>telnet &lt;router_ip_address&gt;</code></p>
+<p>用户名 <code>root</code>无密码，同时在21端口开启FTP服务，可通过FTP管理路由器文件。</p>
+<h2 id="安装-MIXBOX"><a href="#安装-MIXBOX" class="headerlink" title="安装 MIXBOX"></a>安装 MIXBOX</h2><p>通过Telnet进入Shell，执行以下指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c "$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles/install.sh)" &amp;&amp; source /etc/profile &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<p>MIXBOX是一款基于Shell的小米路由器工具箱，原为Monlor-Tools，A tool box for XiaoMi Router base on Shell.</p>
+<p>提供多种拓展工具 包含科技上网、KodExplorer、aria2等</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -507,7 +603,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -519,7 +615,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
