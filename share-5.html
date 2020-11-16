@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"swai.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="基于小米路由器的Shell漏洞利用, 一键开启小米路由器Telnet FTP, 安装   实现科学上网及更多功能.">
+  <meta name="description" content="基于小米路由器的Shell漏洞利用, 一键开启小米路由器Telnet FTP, 安装   实现科学上网及更多功能. 同时也可更换官方固件刷入Breed">
 <meta property="og:type" content="article">
-<meta property="og:title" content="免拆机开启小米路由器Telnet FTP 安装科学工具箱">
+<meta property="og:title" content="免拆机开启小米路由器Telnet FTP 安装科学工具箱 刷入Breed">
 <meta property="og:url" content="https://swai.top/share-5.html">
 <meta property="og:site_name" content="ShallowAi&#39;s Blog">
-<meta property="og:description" content="基于小米路由器的Shell漏洞利用, 一键开启小米路由器Telnet FTP, 安装   实现科学上网及更多功能.">
+<meta property="og:description" content="基于小米路由器的Shell漏洞利用, 一键开启小米路由器Telnet FTP, 安装   实现科学上网及更多功能. 同时也可更换官方固件刷入Breed">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://cdn.jsdelivr.net/gh/acecilia/OpenWRTInvasion@0.0.3/readme/exploit-002.gif">
 <meta property="article:published_time" content="2020-07-18T09:59:01.000Z">
-<meta property="article:modified_time" content="2020-09-12T06:34:48.340Z">
+<meta property="article:modified_time" content="2020-11-14T13:07:31.810Z">
 <meta property="article:author" content="ShallowAi">
 <meta property="article:tag" content="技术分享">
 <meta property="article:tag" content="路由器">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>免拆机开启小米路由器Telnet FTP 安装科学工具箱 | ShallowAi's Blog</title>
+  <title>免拆机开启小米路由器Telnet FTP 安装科学工具箱 刷入Breed | ShallowAi's Blog</title>
   
 
 
@@ -129,7 +129,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">7</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">9</span></a>
 
   </li>
   </ul>
@@ -169,7 +169,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          免拆机开启小米路由器Telnet FTP 安装科学工具箱
+          免拆机开启小米路由器Telnet FTP 安装科学工具箱 刷入Breed
         </h1>
 
         <div class="post-meta">
@@ -186,7 +186,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-12 14:34:48" itemprop="dateModified" datetime="2020-09-12T14:34:48+08:00">2020-09-12</time>
+                <time title="修改时间：2020-11-14 21:07:31" itemprop="dateModified" datetime="2020-11-14T21:07:31+08:00">2020-11-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -210,7 +210,7 @@
 
       
         <p>基于小米路由器的Shell漏洞利用, 一键开启小米路由器Telnet FTP, 安装 </p>
-<p> 实现科学上网及更多功能.</p>
+<p> 实现科学上网及更多功能. 同时也可更换官方固件刷入Breed</p>
 <a id="more"></a>
 
 <h2 id="支持设备"><a href="#支持设备" class="headerlink" title="支持设备"></a>支持设备</h2><ul>
@@ -234,6 +234,9 @@
 
 <p>MIXBOX是一款基于Shell的小米路由器工具箱，原为Monlor-Tools，A tool box for XiaoMi Router base on Shell.</p>
 <p>提供多种拓展工具 包含科技上网、KodExplorer、aria2等</p>
+<h2 id="刷入Breed"><a href="#刷入Breed" class="headerlink" title="刷入Breed"></a>刷入Breed</h2><p>在路由器中通过wget从<a href="https://breed.hackpascal.net/" target="_blank" rel="noopener">Breed官网</a>下载对应路由的Breed，刷入即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mtd -r write breed-mt7621-xiaomi-r3g.bin Bootloader</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -249,7 +252,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://swai.top/share-5.html" title="免拆机开启小米路由器Telnet FTP 安装科学工具箱">https://swai.top/share-5.html</a>
+    <a href="https://swai.top/share-5.html" title="免拆机开启小米路由器Telnet FTP 安装科学工具箱 刷入Breed">https://swai.top/share-5.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -273,7 +276,10 @@
     <a href="/share-4.html" rel="prev" title="笔记本解锁功耗墙 安装最新版XTU">
       <i class="fa fa-chevron-left"></i> 笔记本解锁功耗墙 安装最新版XTU
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/share-6.html" rel="next" title="使用 Github+jsdelivr 加速博客或是搭建图床、静态文件存储 最全教程及提醒">
+      使用 Github+jsdelivr 加速博客或是搭建图床、静态文件存储 最全教程及提醒 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -332,7 +338,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#支持设备"><span class="nav-number">1.</span> <span class="nav-text">支持设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行环境"><span class="nav-number">1.1.</span> <span class="nav-text">运行环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-MIXBOX"><span class="nav-number">3.</span> <span class="nav-text">安装 MIXBOX</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#支持设备"><span class="nav-number">1.</span> <span class="nav-text">支持设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行环境"><span class="nav-number">1.1.</span> <span class="nav-text">运行环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-MIXBOX"><span class="nav-number">3.</span> <span class="nav-text">安装 MIXBOX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷入Breed"><span class="nav-number">4.</span> <span class="nav-text">刷入Breed</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -346,7 +352,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -358,7 +364,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

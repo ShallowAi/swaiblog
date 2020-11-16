@@ -20,15 +20,21 @@
     var CONFIG = {"hostname":"swai.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="ShallowAi&#39;s Blog">
-<meta property="og:url" content="https://swai.top/archives/2020/index.html">
+  <meta name="description" content="Linux, 命令为基石">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 常用指令&#x2F;文件记录">
+<meta property="og:url" content="https://swai.top/share-9.html">
 <meta property="og:site_name" content="ShallowAi&#39;s Blog">
+<meta property="og:description" content="Linux, 命令为基石">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-16T11:29:27.000Z">
+<meta property="article:modified_time" content="2020-11-16T11:42:02.119Z">
 <meta property="article:author" content="ShallowAi">
+<meta property="article:tag" content="技术分享">
+<meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://swai.top/archives/2020/">
+<link rel="canonical" href="https://swai.top/share-9.html">
 
 
 <script id="page-configurations">
@@ -36,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | ShallowAi's Blog</title>
+  <title>Linux 常用指令/文件记录 | ShallowAi's Blog</title>
   
 
 
@@ -141,210 +147,125 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 9 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://swai.top/share-9.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ShallowAi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShallowAi's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux 常用指令/文件记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-16 19:29:27 / 修改时间：19:42:02" itemprop="dateCreated datePublished" datetime="2020-11-16T19:29:27+08:00">2020-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/share/" itemprop="url" rel="index"><span itemprop="name">技术分享</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
-    </div>
+        <p>Linux, 命令为基石</p>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="磁盘测速-hdparm"><a href="#磁盘测速-hdparm" class="headerlink" title="磁盘测速 hdparm"></a>磁盘测速 hdparm</h2><p>Linux <code>hdparm</code>命令用于显示与设定硬盘的参数。</p>
+<p>hdparm可检测，显示与设定IDE或SCSI硬盘的参数。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdparm -Tt /dev/mmcblk1p1</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-11-16T19:29:27+08:00"
-              content="2020-11-16">
-          11-16
-        </time>
-      </div>
+<p>以上命令用于测试硬盘缓存和不带缓存的读取速度。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;dev&#x2F;mmcblk1p1:</span><br><span class="line"> Timing cached reads:   1116 MB in  2.00 seconds &#x3D; 558.18 MB&#x2F;sec</span><br><span class="line"> Timing buffered disk reads:  22 MB in  3.29 seconds &#x3D;   6.69 MB&#x2F;sec</span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/share-9.html" itemprop="url">
-            <span itemprop="name">Linux 常用指令/文件记录</span>
-          </a>
-      </div>
+<h2 id="任务管理器-top"><a href="#任务管理器-top" class="headerlink" title="任务管理器 top"></a>任务管理器 top</h2><p><code>top</code>命令用于实时显示 process 的动态。</p>
+<h2 id="实时流量显示-nload"><a href="#实时流量显示-nload" class="headerlink" title="实时流量显示 nload"></a>实时流量显示 nload</h2><p><code>nload</code>该指令用于显示实时的流量大小，并非所有系统预装，需要安装</p>
+<p>Debian/Ubuntu</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install -y nload</span><br></pre></td></tr></table></figure>
 
-    </header>
-  </article>
+<p>CentOS</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nload</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-11-14T17:14:49+08:00"
-              content="2020-11-14">
-          11-14
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/share-8.html" itemprop="url">
-            <span itemprop="name">充分利用闲置带宽 挂机甜糖赚回电费完整教程</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-12T15:00:13+08:00"
-              content="2020-09-12">
-          09-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/share-7.html" itemprop="url">
-            <span itemprop="name">使用 Yourls 搭建属于你自己的短链接系统</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-09-12T14:28:36+08:00"
-              content="2020-09-12">
-          09-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/share-6.html" itemprop="url">
-            <span itemprop="name">使用 Github+jsdelivr 加速博客或是搭建图床、静态文件存储 最全教程及提醒</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-07-18T17:59:01+08:00"
-              content="2020-07-18">
-          07-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/share-5.html" itemprop="url">
-            <span itemprop="name">免拆机开启小米路由器Telnet FTP 安装科学工具箱 刷入Breed</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-07-07T16:38:16+08:00"
-              content="2020-07-07">
-          07-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/share-4.html" itemprop="url">
-            <span itemprop="name">笔记本解锁功耗墙 安装最新版XTU</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-06-06T11:19:14+08:00"
-              content="2020-06-06">
-          06-06
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/res-3.html" itemprop="url">
-            <span itemprop="name">UI/UX设计用字体分享</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-29T18:46:00+08:00"
-              content="2020-05-29">
-          05-29
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/share-2.html" itemprop="url">
-            <span itemprop="name">关于Hexo搭建的一些坑</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-01-01T12:00:00+08:00"
-              content="2020-01-01">
-          01-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/uncategorized-1.html" itemprop="url">
-            <span itemprop="name">Hello World</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+<h2 id="磁盘管理器-fdisk"><a href="#磁盘管理器-fdisk" class="headerlink" title="磁盘管理器 fdisk"></a>磁盘管理器 fdisk</h2><p><code>fdisk</code>是一个创建和维护分区表的程序，它兼容DOS类型的分区表、BSD或者SUN类型的磁盘列表。</p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ShallowAi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://swai.top/share-9.html" title="Linux 常用指令&#x2F;文件记录">https://swai.top/share-9.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/share/" rel="tag"># 技术分享</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/share-8.html" rel="prev" title="充分利用闲置带宽 挂机甜糖赚回电费完整教程">
+      <i class="fa fa-chevron-left"></i> 充分利用闲置带宽 挂机甜糖赚回电费完整教程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -397,6 +318,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘测速-hdparm"><span class="nav-number">1.1.</span> <span class="nav-text">磁盘测速 hdparm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任务管理器-top"><span class="nav-number">1.2.</span> <span class="nav-text">任务管理器 top</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实时流量显示-nload"><span class="nav-number">1.3.</span> <span class="nav-text">实时流量显示 nload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘管理器-fdisk"><span class="nav-number">1.4.</span> <span class="nav-text">磁盘管理器 fdisk</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
