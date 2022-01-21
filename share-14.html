@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_board.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_board.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_board.svg">
+  <link rel="mask-icon" href="/images/logo_board.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"swai.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="症状重启后，RAID0 所对应的分区无法访问，显示丢失超级块 missing superblock. 由于是刚上线的新项目，还没有开始备份，但是已有部分重要代码，如果找不回来等于损失半个月的工作量. 经检查硬盘S.M.A.R.T状态正常，四块硬盘都是正常识别，也没有坏块，但是对应R0的分区无法读取.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一次 Debian Linux 环境下 RAID0 掉盘的数据恢复记录">
+<meta property="og:url" content="https://swai.top/share-14.html">
+<meta property="og:site_name" content="ShallowAi&#39;s Blog">
+<meta property="og:description" content="症状重启后，RAID0 所对应的分区无法访问，显示丢失超级块 missing superblock. 由于是刚上线的新项目，还没有开始备份，但是已有部分重要代码，如果找不回来等于损失半个月的工作量. 经检查硬盘S.M.A.R.T状态正常，四块硬盘都是正常识别，也没有坏块，但是对应R0的分区无法读取.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-07-28T15:59:11.000Z">
+<meta property="article:modified_time" content="2022-01-21T08:27:49.130Z">
+<meta property="article:author" content="ShallowAi">
+<meta property="article:tag" content="技术分享">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="RAID">
+<meta property="article:tag" content="数据恢复">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://swai.top/share-14.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>一次 Debian Linux 环境下 RAID0 掉盘的数据恢复记录 | ShallowAi's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">ShallowAi's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">总是在摸鱼.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">14</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://swai.top/share-14.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="ShallowAi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ShallowAi's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一次 Debian Linux 环境下 RAID0 掉盘的数据恢复记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-28 23:59:11" itemprop="dateCreated datePublished" datetime="2021-07-28T23:59:11+08:00">2021-07-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-21 16:27:49" itemprop="dateModified" datetime="2022-01-21T16:27:49+08:00">2022-01-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/share/" itemprop="url" rel="index"><span itemprop="name">技术分享</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="症状"><a href="#症状" class="headerlink" title="症状"></a>症状</h2><p>重启后，RAID0 所对应的分区无法访问，显示丢失超级块 missing superblock.</p>
+<p>由于是刚上线的新项目，还没有开始备份，但是已有部分重要代码，如果找不回来等于损失半个月的工作量.</p>
+<p>经检查硬盘S.M.A.R.T状态正常，四块硬盘都是正常识别，也没有坏块，但是对应R0的分区无法读取.</p>
+<a id="more"></a>
+
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>系统: Debian 10</p>
+<p>CPU: Intel Xeon E5-2699 v3 *2</p>
+<p>RAM: 256GB DDR4</p>
+<p>阵列状态: RAID0 (Sandisk Extreme Pro 480G SSD *4) RAID1 (希捷 1TB HDD + 西部数据 1TB HDD)</p>
+<p>阵列类型: 软件(Software)</p>
+<h3 id="处理过程"><a href="#处理过程" class="headerlink" title="处理过程"></a>处理过程</h3><ol>
+<li>直接重新挂载，失败，丢失超级块。</li>
+<li><code>fsck</code> 修复，无效。</li>
+<li>对四块硬盘做镜像后重建阵列，失败。</li>
+<li>以相同信息新建阵列，无法进行操作，必须格式化。</li>
+<li>这时候已经束手无策了，只能考虑磁盘恢复软件。</li>
+</ol>
+<h3 id="Testdisk"><a href="#Testdisk" class="headerlink" title="Testdisk"></a>Testdisk</h3><p>经过广泛的尝试和搜索，找到了这样一个工具 <code>testdisk</code></p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>输入命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt install -y testdisk</span><br><span class="line"><span class="meta">#</span><span class="bash"> 运行</span></span><br><span class="line">testdisk</span><br></pre></td></tr></table></figure>
+
+<p>运行后界面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">TestDisk 7.0, Data Recovery Utility, April 2015</span><br><span class="line">Christophe GRENIER &lt;grenier@cgsecurity.org&gt;</span><br><span class="line">http:&#x2F;&#x2F;www.cgsecurity.org</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TestDisk is free data recovery software designed to help recover lost</span><br><span class="line">partitions and&#x2F;or make non-booting disks bootable again when these symptoms</span><br><span class="line">are caused by faulty software, certain types of viruses or human error.</span><br><span class="line">It can also be used to repair some filesystem errors.</span><br><span class="line"></span><br><span class="line">Information gathered during TestDisk use can be recorded for later</span><br><span class="line">review. If you choose to create the text file, testdisk.log , it</span><br><span class="line">will contain TestDisk options, technical information and various</span><br><span class="line">outputs; including any folder&#x2F;file names TestDisk was used to find and</span><br><span class="line">list onscreen.</span><br><span class="line"></span><br><span class="line">Use arrow keys to select, then press Enter key:</span><br><span class="line">&gt;[ Create ] Create a new log file</span><br><span class="line"> [ Append ] Append information to log file</span><br><span class="line"> [ No Log ] Don&#39;t record anything</span><br></pre></td></tr></table></figure>
+
+<p>这里是设置保存日志的地方，一般情况下直接回车选择  <code>Create</code> </p>
+<p>接下来会要求选择硬盘，直接选择RAID对应的分区即可.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">TestDisk 7.0, Data Recovery Utility, April 2015</span><br><span class="line">Christophe GRENIER &lt;grenier@cgsecurity.org&gt;</span><br><span class="line">http:&#x2F;&#x2F;www.cgsecurity.org</span><br><span class="line"></span><br><span class="line">  TestDisk is free software, and</span><br><span class="line">comes with ABSOLUTELY NO WARRANTY.</span><br><span class="line"></span><br><span class="line">Select a media (use Arrow keys, then press Enter):</span><br><span class="line">&gt;Disk &#x2F;dev&#x2F;md0</span><br></pre></td></tr></table></figure>
+
+<p>如果未识别出分区，会要求选择分区表类型，按照个人类型选择即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">TestDisk 7.0, Data Recovery Utility, April 2015</span><br><span class="line">Christophe GRENIER &lt;grenier@cgsecurity.org&gt;</span><br><span class="line">http:&#x2F;&#x2F;www.cgsecurity.org</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk &#x2F;dev&#x2F;md0 -  * GB &#x2F; * GB</span><br><span class="line">     * sectors - sector size&#x3D;*</span><br><span class="line"></span><br><span class="line">&gt;[ Analyse  ] Analyse current partition structure and search for lost partitions</span><br><span class="line"> [ Advanced ] Filesystem Utils</span><br><span class="line"> [ Geometry ] Change disk geometry</span><br><span class="line"> [ Options  ] Modify options</span><br><span class="line"> [ Quit     ] Return to disk selection</span><br></pre></td></tr></table></figure>
+
+<p>选择 Analyse 就会自动分析出分区，如果分析出了你想要的内容，就可以直接按 浏览文件，然后复制到正常的硬盘中。</p>
+<p>选择 Advanced 可以恢复已删除的文件系统，按Undelete即可。</p>
+<p>由于我已经在实际环境恢复过一遍，剩下的内容就无法演示了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Testdisk是强大的数据恢复工具，但是备份才是最重要的，没有人会再想在23点通宵到第二天上午来解决这种数据丢失的问题。</p>
+<blockquote>
+<p>R0一时爽，数据火葬场</p>
+</blockquote>
+<p>这次教训后已将阵列修改为RAID10，兼顾速度与安全性，反正又不缺硬盘。</p>
+<blockquote>
+<p>记得备份!!!</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>ShallowAi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://swai.top/share-14.html" title="一次 Debian Linux 环境下 RAID0 掉盘的数据恢复记录">https://swai.top/share-14.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/share/" rel="tag"># 技术分享</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/RAID/" rel="tag"># RAID</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/" rel="tag"># 数据恢复</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/share-13.html" rel="prev" title="IDEA 环境下 Tomcat 运行 Servlet 404/实例化失败 ClassNotFoundException 解决记录">
+      <i class="fa fa-chevron-left"></i> IDEA 环境下 Tomcat 运行 Servlet 404/实例化失败 ClassNotFoundException 解决记录
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#症状"><span class="nav-number">1.</span> <span class="nav-text">症状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">2.</span> <span class="nav-text">环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#处理过程"><span class="nav-number">2.1.</span> <span class="nav-text">处理过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testdisk"><span class="nav-number">2.2.</span> <span class="nav-text">Testdisk</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.2.1.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">ShallowAi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ShallowAi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ShallowAi" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ShallowAi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/velocity-animate@1/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
