@@ -16,15 +16,15 @@
   <meta name="author" content="ShallowAi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Li">
+    <meta name="description" content="TODO:">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Rclone 备份记录">
+<meta property="og:title" content="Rclone 实现自动化备份, 安装和过程记录">
 <meta property="og:url" content="https://swai.top/share-16.html">
 <meta property="og:site_name" content="ShallowAi&#39;s Blog">
-<meta property="og:description" content="Li">
+<meta property="og:description" content="TODO:">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-16T11:29:27.000Z">
-<meta property="article:modified_time" content="2023-11-16T11:29:27.000Z">
+<meta property="article:published_time" content="2023-01-16T11:29:27.000Z">
+<meta property="article:modified_time" content="2023-01-16T11:29:27.000Z">
 <meta property="article:author" content="ShallowAi">
 <meta property="article:tag" content="技术分享">
 <meta property="article:tag" content="Linux">
@@ -32,7 +32,7 @@
   
   
   
-  <title>Rclone 备份记录 - ShallowAi&#39;s Blog</title>
+  <title>Rclone 实现自动化备份, 安装和过程记录 - ShallowAi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Rclone 备份记录"></span>
+            <span id="subtitle" data-typed-text="Rclone 实现自动化备份, 安装和过程记录"></span>
           
         </div>
 
@@ -209,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-16 19:29" pubdate>
-          2023年11月16日 晚上
+        <time datetime="2023-01-16 19:29" pubdate>
+          2023年1月16日 晚上
         </time>
       </span>
     
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          681 字
+          16 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          6 分钟
+          1 分钟
         
       </span>
     
@@ -270,16 +270,16 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Rclone 备份记录</h1>
+            <h1 style="display: none">Rclone 实现自动化备份, 安装和过程记录</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Li</p>
+                <p>TODO: </p>
 <span id="more"></span>
 
-<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="vnstat-网络流量监控"><a href="#vnstat-网络流量监控" class="headerlink" title="vnstat 网络流量监控"></a>vnstat 网络流量监控</h2><p>每天自动更新, 自带统计</p>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">Database updated: 2022-11-27 04:15:00<br><br>   eth0 since 2022-10-26<br><br>          rx:  43.72 GiB      tx:  828.52 GiB      total:  872.24 GiB<br><br>   monthly<br>                     rx      |<span class="hljs-string">     tx      </span>|<span class="hljs-string">    total    </span>|<span class="hljs-string">   avg. rate</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">       2022-11     43.72 GiB </span>|<span class="hljs-string">  828.52 GiB </span>|<span class="hljs-string">  872.24 GiB </span>|<span class="hljs-string">    3.31 Mbit/s</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     estimated     50.10 GiB </span>|<span class="hljs-string">  949.52 GiB </span>|<span class="hljs-string">  999.63 GiB </span>|<br><br>   daily<br>                     rx      |<span class="hljs-string">     tx      </span>|<span class="hljs-string">    total    </span>|<span class="hljs-string">   avg. rate</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     yesterday      8.41 GiB </span>|<span class="hljs-string">  264.23 GiB </span>|<span class="hljs-string">  272.64 GiB </span>|<span class="hljs-string">   27.11 Mbit/s</span><br><span class="hljs-string">         today    405.98 MiB </span>|<span class="hljs-string">    8.53 GiB </span>|<span class="hljs-string">    8.93 GiB </span>|<span class="hljs-string">    5.01 Mbit/s</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     estimated      2.24 GiB </span>|<span class="hljs-string">   48.17 GiB </span>|<span class="hljs-string">   50.41 GiB </span>|<br></code></pre></td></tr></table></figure>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>Rclone</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs"><br></code></pre></td></tr></table></figure>
 
 
                 
@@ -328,7 +328,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Rclone 备份记录</div>
+      <div>Rclone 实现自动化备份, 安装和过程记录</div>
       <div>https://swai.top/share-16.html</div>
     </div>
     <div class="license-meta">
@@ -341,7 +341,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月16日</div>
+          <div>2023年1月16日</div>
         </div>
       
       
