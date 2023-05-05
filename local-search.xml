@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Rclone 备份记录</title>
+    <link href="/share-16.html"/>
+    <url>/share-16.html</url>
+    
+    <content type="html"><![CDATA[<p>Li</p><span id="more"></span><h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="vnstat-网络流量监控"><a href="#vnstat-网络流量监控" class="headerlink" title="vnstat 网络流量监控"></a>vnstat 网络流量监控</h2><p>每天自动更新, 自带统计</p><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">Database updated: 2022-11-27 04:15:00<br><br>   eth0 since 2022-10-26<br><br>          rx:  43.72 GiB      tx:  828.52 GiB      total:  872.24 GiB<br><br>   monthly<br>                     rx      |<span class="hljs-string">     tx      </span>|<span class="hljs-string">    total    </span>|<span class="hljs-string">   avg. rate</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">       2022-11     43.72 GiB </span>|<span class="hljs-string">  828.52 GiB </span>|<span class="hljs-string">  872.24 GiB </span>|<span class="hljs-string">    3.31 Mbit/s</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     estimated     50.10 GiB </span>|<span class="hljs-string">  949.52 GiB </span>|<span class="hljs-string">  999.63 GiB </span>|<br><br>   daily<br>                     rx      |<span class="hljs-string">     tx      </span>|<span class="hljs-string">    total    </span>|<span class="hljs-string">   avg. rate</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     yesterday      8.41 GiB </span>|<span class="hljs-string">  264.23 GiB </span>|<span class="hljs-string">  272.64 GiB </span>|<span class="hljs-string">   27.11 Mbit/s</span><br><span class="hljs-string">         today    405.98 MiB </span>|<span class="hljs-string">    8.53 GiB </span>|<span class="hljs-string">    8.93 GiB </span>|<span class="hljs-string">    5.01 Mbit/s</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     estimated      2.24 GiB </span>|<span class="hljs-string">   48.17 GiB </span>|<span class="hljs-string">   50.41 GiB </span>|<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>一次 Debian Linux 环境下 RAID0 掉盘的数据恢复记录</title>
+    <link href="/share-14.html"/>
+    <url>/share-14.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="症状"><a href="#症状" class="headerlink" title="症状"></a>症状</h2><p>重启后，RAID0 所对应的分区无法访问，显示丢失超级块 missing superblock.</p><p>由于是刚上线的新项目，还没有开始备份，但是已有部分重要代码，如果找不回来等于损失半个月的工作量.</p><p>经检查硬盘S.M.A.R.T状态正常，四块硬盘都是正常识别，也没有坏块，但是对应R0的分区无法读取.</p><span id="more"></span><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>系统: Debian 10</p><p>CPU: Intel Xeon E5-2699 v3 *2</p><p>RAM: 256GB DDR4</p><p>阵列状态: RAID0 (Sandisk Extreme Pro 480G SSD *4) RAID1 (希捷 1TB HDD + 西部数据 1TB HDD)</p><p>阵列类型: 软件(Software)</p><h3 id="处理过程"><a href="#处理过程" class="headerlink" title="处理过程"></a>处理过程</h3><ol><li>直接重新挂载，失败，丢失超级块。</li><li><code>fsck</code> 修复，无效。</li><li>对四块硬盘做镜像后重建阵列，失败。</li><li>以相同信息新建阵列，无法进行操作，必须格式化。</li><li>这时候已经束手无策了，只能考虑磁盘恢复软件。</li></ol><h3 id="Testdisk"><a href="#Testdisk" class="headerlink" title="Testdisk"></a>Testdisk</h3><p>经过广泛的尝试和搜索，找到了这样一个工具 <code>testdisk</code></p><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><p>输入命令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt install -y testdisk<br><span class="hljs-meta prompt_"># </span><span class="language-bash">运行</span><br>testdisk<br></code></pre></td></tr></table></figure><p>运行后界面</p><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs vhdl">TestDisk <span class="hljs-number">7.0</span>, Data Recovery Utility, April <span class="hljs-number">2015</span><br>Christophe GRENIER &lt;grenier@cgsecurity.org&gt;<br>http://www.cgsecurity.org<br><br><br>TestDisk <span class="hljs-keyword">is</span> free data recovery software designed <span class="hljs-keyword">to</span> help recover lost<br>partitions <span class="hljs-keyword">and</span>/<span class="hljs-keyword">or</span> make non-booting disks bootable again <span class="hljs-keyword">when</span> these symptoms<br>are caused by faulty software, certain types <span class="hljs-keyword">of</span> viruses <span class="hljs-keyword">or</span> human <span class="hljs-literal">error</span>.<br>It can also be used <span class="hljs-keyword">to</span> repair some filesystem errors.<br><br>Information gathered during TestDisk <span class="hljs-keyword">use</span> can be recorded <span class="hljs-keyword">for</span> later<br>review. <span class="hljs-keyword">If</span> you choose <span class="hljs-keyword">to</span> create the <span class="hljs-literal">text</span> <span class="hljs-keyword">file</span>, testdisk.log , it<br>will contain TestDisk options, technical information <span class="hljs-keyword">and</span> various<br>outputs; including any folder/<span class="hljs-keyword">file</span> names TestDisk was used <span class="hljs-keyword">to</span> find <span class="hljs-keyword">and</span><br>list onscreen.<br><br><span class="hljs-keyword">Use</span> arrow keys <span class="hljs-keyword">to</span> <span class="hljs-keyword">select</span>, <span class="hljs-keyword">then</span> press Enter key:<br>&gt;[ Create ] Create a <span class="hljs-keyword">new</span> log <span class="hljs-keyword">file</span><br> [ Append ] Append information <span class="hljs-keyword">to</span> log <span class="hljs-keyword">file</span><br> [ No Log ] Don<span class="hljs-symbol">&#x27;t</span> <span class="hljs-keyword">record</span> anything<br> <br></code></pre></td></tr></table></figure><p>这里是设置保存日志的地方，一般情况下直接回车选择  <code>Create</code> </p><p>接下来会要求选择硬盘，直接选择RAID对应的分区即可.</p><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs actionscript">TestDisk <span class="hljs-number">7.0</span>, Data Recovery Utility, April <span class="hljs-number">2015</span><br>Christophe GRENIER &lt;grenier@cgsecurity.org&gt;<br>http:<span class="hljs-comment">//www.cgsecurity.org</span><br><br>  TestDisk <span class="hljs-keyword">is</span> free software, and<br>comes <span class="hljs-keyword">with</span> ABSOLUTELY NO WARRANTY.<br><br>Select a media (<span class="hljs-keyword">use</span> Arrow keys, then press Enter):<br>&gt;Disk /dev/md0 <br></code></pre></td></tr></table></figure><p>如果未识别出分区，会要求选择分区表类型，按照个人类型选择即可。</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">TestDisk <span class="hljs-number">7.0</span>, Data Recovery Utility, April <span class="hljs-number">2015</span><br>Christophe GRENIER &lt;grenier@cgsecurity.org&gt;<br>http://www.cgsecurity.org<br><br><br>Disk /dev/md0 -  * GB / * GB<br>     * sectors - sector size=*<br><br>&gt;[ <span class="hljs-keyword">Analyse</span>  ] <span class="hljs-keyword">Analyse</span> <span class="hljs-keyword">current</span> <span class="hljs-keyword">partition</span> structure <span class="hljs-keyword">and</span> <span class="hljs-keyword">search</span> <span class="hljs-keyword">for</span> lost partitions<br> [ Advanced ] Filesystem Utils<br> [ Geometry ] Change disk geometry<br> [ <span class="hljs-keyword">Options</span>  ] Modify <span class="hljs-keyword">options</span><br> [ Quit     ] <span class="hljs-keyword">Return</span> <span class="hljs-keyword">to</span> disk selection<br><br></code></pre></td></tr></table></figure><p>选择 Analyse 就会自动分析出分区，如果分析出了你想要的内容，就可以直接按 浏览文件，然后复制到正常的硬盘中。</p><p>选择 Advanced 可以恢复已删除的文件系统，按Undelete即可。</p><p>由于我已经在实际环境恢复过一遍，剩下的内容就无法演示了。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Testdisk是强大的数据恢复工具，但是备份才是最重要的，没有人会再想在23点通宵到第二天上午来解决这种数据丢失的问题。</p><blockquote><p>R0一时爽，数据火葬场</p></blockquote><p>这次教训后已将阵列修改为RAID10，兼顾速度与安全性，反正又不缺硬盘。</p><blockquote><p>记得备份!!!</p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>Linux</tag>
+      
+      <tag>Debian</tag>
+      
+      <tag>RAID</tag>
+      
+      <tag>数据恢复</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>IDEA 环境下 Tomcat 运行 Servlet 404/实例化失败 ClassNotFoundException 解决记录</title>
+    <link href="/share-13.html"/>
+    <url>/share-13.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><p>Intellij IDEA Ultimate 2021.1</p><p>Tomcat 10.0.5</p><h2 id="详细内容"><a href="#详细内容" class="headerlink" title="详细内容"></a>详细内容</h2><p>创建项目时已选择Servlet服务，使用IDEA运行Servlet程序，编译通过，但是访问对应Servlet页面返回404，jsp编写的页面正常。</p><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><span id="more"></span><p>IDEA在创建项目时选择顶部的 Version 为 Jakarta EE 9 而非 Java EE 8，因为 Tomcat 10 修改了 EE 的定义。</p><p><img src="https://cdn.jsdelivr.net/gh/ShallowAi/imgbase@master/hexo-content/20220121154600026.png" alt=""></p><p>官网描述</p><blockquote><p>Applications that run on Tomcat 9 and earlier will not run on Tomcat 10 without changes. Java EE based applications designed for Tomcat 9 and earlier may be placed in the <code>$CATALINA_BASE/webapps-javaee</code> directory and Tomcat will automatically convert them to Jakarta EE and copy them to the webapps directory.</p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>Java</tag>
+      
+      <tag>Tomcat</tag>
+      
+      <tag>IDEA</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>如何在 Debian 上手动安装 MariaDB, 个人安装记录</title>
+    <link href="/share-12.html"/>
+    <url>/share-12.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>MariaDB 是 一款开源关系数据库软件, MySQL的开源分支. 在部分方面的性能强于MySQL</p><h2 id="安装及配置"><a href="#安装及配置" class="headerlink" title="安装及配置"></a>安装及配置</h2><span id="more"></span><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>安装环境：</p><p>Debian 10 64-bit</p><p>执行以下指令，配置软件源</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt install -y apt-transport-https<br>curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | bash<br>apt update<br></code></pre></td></tr></table></figure><h3 id="安装主程序"><a href="#安装主程序" class="headerlink" title="安装主程序"></a>安装主程序</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt-get install -y mariadb-server<br></code></pre></td></tr></table></figure><p>等待安装完成即可.</p><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>执行</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mysql_secure_installation<br></code></pre></td></tr></table></figure><p>显示内容如下，按问题键入对应选项</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">NOTE: RUNNING <span class="hljs-keyword">ALL</span> PARTS <span class="hljs-keyword">OF</span> THIS SCRIPT <span class="hljs-keyword">IS</span> RECOMMENDED <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">ALL</span> MariaDB<br>      SERVERS <span class="hljs-keyword">IN</span> PRODUCTION USE!  PLEASE <span class="hljs-keyword">READ</span> <span class="hljs-keyword">EACH</span> STEP CAREFULLY!<br><br><span class="hljs-keyword">In</span> <span class="hljs-keyword">order</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">log</span> <span class="hljs-keyword">into</span> MariaDB <span class="hljs-keyword">to</span> secure it, w<span class="hljs-string">e&#x27;ll need the current</span><br><span class="hljs-string">password for the root user. If you&#x27;</span>ve just installed MariaDB, <span class="hljs-keyword">and</span><br>haven<span class="hljs-string">&#x27;t set the root password yet, you should just press enter here.</span><br><span class="hljs-string"></span><br><span class="hljs-string">Enter current password for root (enter for none): </span><br></code></pre></td></tr></table></figure><p>首次使用默认无密码, 按回车跳过</p><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">OK, successfully used password, moving on...<br><br>Setting <span class="hljs-keyword">the</span> root password <span class="hljs-keyword">or</span> <span class="hljs-keyword">using</span> <span class="hljs-keyword">the</span> unix_socket ensures that nobody<br>can <span class="hljs-built_in">log</span> <span class="hljs-keyword">into</span> <span class="hljs-keyword">the</span> MariaDB root user <span class="hljs-keyword">without</span> <span class="hljs-keyword">the</span> proper authorisation.<br><br>You already have your root account protected, so you can safely answer <span class="hljs-string">&#x27;n&#x27;</span>.<br><br>Switch <span class="hljs-built_in">to</span> unix_socket authentication [Y/n] <br></code></pre></td></tr></table></figure><p>上述表示root账户已保护, 可以按N跳过</p><figure class="highlight erlang-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs erlang-repl">Enabled successfully!<br>Reloading privilege tables..<br> ... Success!<br>Change the root password? [Y/n] y<br></code></pre></td></tr></table></figure><p>按Y进入MariaDB root账户密码修改,修改要求输入密码两次, 此处不做赘述</p><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">By</span> <span class="hljs-keyword">default</span>, a MariaDB installation has an anonymous <span class="hljs-keyword">user</span>, allowing anyone<br><span class="hljs-keyword">to</span> <span class="hljs-keyword">log</span> <span class="hljs-keyword">into</span> MariaDB <span class="hljs-keyword">without</span> <span class="hljs-keyword">having</span> <span class="hljs-keyword">to</span> have a <span class="hljs-keyword">user</span> account created <span class="hljs-keyword">for</span><br>them.  This <span class="hljs-keyword">is</span> intended <span class="hljs-keyword">only</span> <span class="hljs-keyword">for</span> testing, <span class="hljs-keyword">and</span> <span class="hljs-keyword">to</span> make the installation<br>go a <span class="hljs-type">bit</span> smoother.  You should remove them <span class="hljs-keyword">before</span> moving <span class="hljs-keyword">into</span> a<br>production environment.<br><br>Remove anonymous users? [Y/n] y<br></code></pre></td></tr></table></figure><p>是否删除匿名用户 是(Y)</p><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"> ... Success!<br><br>Normally, root should only be allowed <span class="hljs-built_in">to</span> connect <span class="hljs-built_in">from</span> <span class="hljs-string">&#x27;localhost&#x27;</span>.  This<br>ensures that someone cannot guess <span class="hljs-keyword">at</span> <span class="hljs-keyword">the</span> root password <span class="hljs-built_in">from</span> <span class="hljs-keyword">the</span> network.<br><br>Disallow root login remotely? [Y/n] y<br></code></pre></td></tr></table></figure><p>禁止远程登录, 建议是(Y)</p><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"> ... Success!<br><br>By default, MariaDB comes <span class="hljs-keyword">with</span> <span class="hljs-keyword">a</span> database named <span class="hljs-string">&#x27;test&#x27;</span> that anyone can<br>access.  This is also intended only <span class="hljs-keyword">for</span> testing, <span class="hljs-keyword">and</span> should be removed<br><span class="hljs-keyword">before</span> moving <span class="hljs-keyword">into</span> <span class="hljs-keyword">a</span> production environment.<br><br>Remove test database <span class="hljs-keyword">and</span> access <span class="hljs-built_in">to</span> <span class="hljs-keyword">it</span>? [Y/n] y<br></code></pre></td></tr></table></figure><p>删除默认的测试库, 建议是(Y)</p><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs lasso">Dropping test database<span class="hljs-params">...</span><br><span class="hljs-params">...</span> Success!<br><br>Removing privileges <span class="hljs-keyword">on</span> test database<span class="hljs-params">...</span><br><span class="hljs-params">...</span> Success!<br><br>Reloading the privilege tables will ensure that <span class="hljs-literal">all</span> changes made so far<br>will <span class="hljs-keyword">take</span> effect immediately.<br><br>Reload privilege tables now? <span class="hljs-meta">[</span>Y/n<span class="hljs-meta">]</span> y<br></code></pre></td></tr></table></figure><p> 重新加载权限表使设置生效, 是(Y)</p><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ada">... Success!<br><br>Cleaning up...<br><br><span class="hljs-keyword">All</span> done!  <span class="hljs-keyword">If</span> you<span class="hljs-symbol">&#x27;ve</span> completed <span class="hljs-keyword">all</span> <span class="hljs-keyword">of</span> the above steps, your MariaDB<br>installation should now be secure.<br><br>Thanks <span class="hljs-keyword">for</span> using MariaDB!<br></code></pre></td></tr></table></figure><p>至此, 安装结束.</p><h2 id="测试连接"><a href="#测试连接" class="headerlink" title="测试连接"></a>测试连接</h2><p>键入指令 进行登录测试</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mysql -uroot -pYourpassword<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>数据库</tag>
+      
+      <tag>Maria</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>记解决 Unable to start Intel Extreme Tuning Utility 问题的过程.</title>
+    <link href="/share-11.html"/>
+    <url>/share-11.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><p>最近在折腾电脑时, 突发奇想去Intel官网升级了下XTU, 结果发现降压功能不能用了, 一顿操作卸载安装旧版后突发报错.<br><code>Unable to start Intel Extreme Tuning Utility. If there is another performance tuning application running, you must close it before trying to start this application.</code></p><h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>首先, 查看日志 <code>C:\ProgramData\Intel\Intel Extreme Tuning Utility\Logs</code></p><span id="more"></span><p>发现日志中有如下内容</p><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">2021</span>/<span class="hljs-number">02</span>/<span class="hljs-number">26</span>-<span class="hljs-number">18</span>:<span class="hljs-number">48</span>:<span class="hljs-number">16</span>.<span class="hljs-number">4012</span>|!ERR] XTU Service not located<br><span class="hljs-attribute">2021</span>/<span class="hljs-number">02</span>/<span class="hljs-number">26</span>-<span class="hljs-number">18</span>:<span class="hljs-number">48</span>:<span class="hljs-number">16</span>.<span class="hljs-number">4081</span>|!ERR] Could not find a PerfTuneService instance<br></code></pre></td></tr></table></figure><p>大致猜测原因为XTU服务未运行, 根据Intel官网的卸载解决方案得出重新安装服务的方法。</p><p>以管理员身份打开命令提示符，执行下列指令重新安装服务。</p><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs livescript">C:<span class="hljs-string">\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe</span> /i C:<span class="hljs-string">\Program</span> Files (x86)<span class="hljs-string">\Intel\Intel(R)</span> Extreme Tuning Utility<span class="hljs-string">\Drivers\XtuService.exe</span><br></code></pre></td></tr></table></figure><p>执行后重新运行XTU, 问题解决.</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>CPU</tag>
+      
+      <tag>笔记本</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Linux Samba 安装配置避坑记录</title>
+    <link href="/share-10.html"/>
+    <url>/share-10.html</url>
+    
+    <content type="html"><![CDATA[<p>近日在使用内网的一台Debian设备时，需要共享媒体文件，进而在其上搭建了一个<code>Samba</code>服务器并进行配置，其中踩了不少小坑（网上太多复制粘贴的教程了，重点是复制都不复制完整）。本文仅作记录个人的搭建过程。</p><span id="more"></span><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>执行下列指令进行安装，有apt真好</p><p><code>Debian/Ubuntu</code></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">apt -y install samba<br></code></pre></td></tr></table></figure><p><code>CentOS</code></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum -y install samba<br></code></pre></td></tr></table></figure><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>首先新建一个专用于samba的用户</p><p><code>useradd samba</code></p><p>增加一个要共享的目录，可修改为其他文件夹</p><p><code>mkdir /home/samba</code></p><p><code>chown -R samba:samba /home/samba</code></p><p>这才是重点！通过以上指令设置后，默认配置文件在</p><p><code>/etc/samba/smb.conf</code></p><p>执行<code>nano /etc/samba/smb.conf</code>指令，编辑配置文件</p><p>翻到最后有以下内容</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash">[homes]<br>    <span class="hljs-comment"># 描述</span><br>comment = 介绍<br><span class="hljs-comment"># 可查看</span><br>browseable = <span class="hljs-built_in">yes</span><br><span class="hljs-comment"># 可写</span><br>writable = <span class="hljs-built_in">yes</span><br><span class="hljs-comment"># 有权使用的用户</span><br>valid <span class="hljs-built_in">users</span> = samba<br><span class="hljs-comment"># 允许匿名登录</span><br>guest ok = no<br><span class="hljs-comment"># 目录</span><br>path = /home/samba<br></code></pre></td></tr></table></figure><p>结束简单配置.</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>Linux</tag>
+      
+      <tag>Samba</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Linux 进阶指令/文件记录</title>
+    <link href="/share-15.html"/>
+    <url>/share-15.html</url>
+    
+    <content type="html"><![CDATA[<p>Li</p><span id="more"></span><h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="vnstat-网络流量监控"><a href="#vnstat-网络流量监控" class="headerlink" title="vnstat 网络流量监控"></a>vnstat 网络流量监控</h2><p>每天自动更新, 自带统计</p><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">Database updated: 2022-11-27 04:15:00<br><br>   eth0 since 2022-10-26<br><br>          rx:  43.72 GiB      tx:  828.52 GiB      total:  872.24 GiB<br><br>   monthly<br>                     rx      |<span class="hljs-string">     tx      </span>|<span class="hljs-string">    total    </span>|<span class="hljs-string">   avg. rate</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">       2022-11     43.72 GiB </span>|<span class="hljs-string">  828.52 GiB </span>|<span class="hljs-string">  872.24 GiB </span>|<span class="hljs-string">    3.31 Mbit/s</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     estimated     50.10 GiB </span>|<span class="hljs-string">  949.52 GiB </span>|<span class="hljs-string">  999.63 GiB </span>|<br><br>   daily<br>                     rx      |<span class="hljs-string">     tx      </span>|<span class="hljs-string">    total    </span>|<span class="hljs-string">   avg. rate</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     yesterday      8.41 GiB </span>|<span class="hljs-string">  264.23 GiB </span>|<span class="hljs-string">  272.64 GiB </span>|<span class="hljs-string">   27.11 Mbit/s</span><br><span class="hljs-string">         today    405.98 MiB </span>|<span class="hljs-string">    8.53 GiB </span>|<span class="hljs-string">    8.93 GiB </span>|<span class="hljs-string">    5.01 Mbit/s</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     estimated      2.24 GiB </span>|<span class="hljs-string">   48.17 GiB </span>|<span class="hljs-string">   50.41 GiB </span>|<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Linux 常用指令/文件记录</title>
+    <link href="/share-9.html"/>
+    <url>/share-9.html</url>
+    
+    <content type="html"><![CDATA[<p>Linux, 命令为基石</p><span id="more"></span><h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="磁盘测速-hdparm"><a href="#磁盘测速-hdparm" class="headerlink" title="磁盘测速 hdparm"></a>磁盘测速 hdparm</h2><p>Linux <code>hdparm</code>命令用于显示与设定硬盘的参数。</p><p>hdparm可检测，显示与设定IDE或SCSI硬盘的参数。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hdparm -Tt /dev/mmcblk1p1<br></code></pre></td></tr></table></figure><p>以上命令用于测试硬盘缓存和不带缓存的读取速度。</p><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">/dev/mmcblk1p1:<br> Timing cached reads:   <span class="hljs-number">1116</span> MB <span class="hljs-keyword">in</span>  <span class="hljs-number">2.00</span> <span class="hljs-built_in">seconds</span> = <span class="hljs-number">558.18</span> MB/<span class="hljs-built_in">sec</span><br> Timing buffered disk reads:  <span class="hljs-number">22</span> MB <span class="hljs-keyword">in</span>  <span class="hljs-number">3.29</span> <span class="hljs-built_in">seconds</span> =   <span class="hljs-number">6.69</span> MB/<span class="hljs-built_in">sec</span><br></code></pre></td></tr></table></figure><h2 id="任务管理器-top"><a href="#任务管理器-top" class="headerlink" title="任务管理器 top"></a>任务管理器 top</h2><p><code>top</code>命令用于实时显示 process 的动态。</p><h2 id="实时流量显示-nload"><a href="#实时流量显示-nload" class="headerlink" title="实时流量显示 nload"></a>实时流量显示 nload</h2><p><code>nload</code>该指令用于显示实时的流量大小，并非所有系统预装，需要安装</p><p>Debian/Ubuntu</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Shell">apt install -y nload<br></code></pre></td></tr></table></figure><p>CentOS</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yum install -y nload<br></code></pre></td></tr></table></figure><h2 id="磁盘管理器-fdisk"><a href="#磁盘管理器-fdisk" class="headerlink" title="磁盘管理器 fdisk"></a>磁盘管理器 fdisk</h2><p><code>fdisk</code>是一个创建和维护分区表的程序，它兼容DOS类型的分区表、BSD或者SUN类型的磁盘列表。</p><h2 id="磁盘使用状态-du-dh"><a href="#磁盘使用状态-du-dh" class="headerlink" title="磁盘使用状态 du dh"></a>磁盘使用状态 du dh</h2><p><code>du</code> 是一个查看当前使用状态</p><p><code>du -ah --max-depth=1</code> 当前目录下文件夹占用空间</p><h2 id="日志管理-journalctl"><a href="#日志管理-journalctl" class="headerlink" title="日志管理 journalctl"></a>日志管理 journalctl</h2><p><code>journalctl --disk-usage</code> 查看日志所占空间</p><p><code>journalctl --vacuum-size=100M</code> 清理至100M</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>充分利用闲置带宽 挂机甜糖赚回电费完整教程</title>
+    <link href="/share-8.html"/>
+    <url>/share-8.html</url>
+    
+    <content type="html"><![CDATA[<p>带宽，特别是家用宽带，平时使用的时候似乎也用不了多少上传速度，不如拿一部分来跑PCDN（即P2P CDN），把闲置的网费赚回来，其中有一个对设备需求较低的PCDN平台，即本文主角 <code>甜糖</code>. 以<code>玩客云</code>和一台<code>已Root的安卓设备</code>为例，展示完整的搭建和使用教程。</p><span id="more"></span><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><h3 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h3><ul><li>一台Arm架构的设备或虚拟机(<code>手机 模拟器 docker的arm容器</code>)</li></ul><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul><li>Android 4.4+ 或 Linux arm架构</li></ul><h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><ul><li>稳定的WIFI或者有线网络, 路由器支持UPnP</li></ul><h2 id="准备开始"><a href="#准备开始" class="headerlink" title="准备开始"></a>准备开始</h2><h3 id="玩客云"><a href="#玩客云" class="headerlink" title="玩客云"></a>玩客云</h3><h4 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a>刷机</h4><ul><li>公对公USB线</li><li>短接线(金属丝)</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>PCDN</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>使用 Yourls 搭建属于你自己的短链接系统</title>
+    <link href="/share-7.html"/>
+    <url>/share-7.html</url>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>如今大量的短链接网站开始限制或者禁止部分网址，或是由免费转为付费（随机抽取幸运观众删除链接），愿审查与你同在。</p><p>搭建一个短链接系统，似乎就有点意义了，也不需要多高的服务器配置。</p><p><code>Yourls</code>是一个基于PHP的开源短链接系统，支持多种数据库，虽然目前还有些许问题，比如账户管理系统还不太方便，但是也在不断完善中。希望有能力的人也去贡献一点自己的能力。</p><span id="more"></span><h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><ol><li>一个域名（包括 .tk .ml .ga .gq 等免费域名均可）</li><li>一台服务器或者虚拟主机，已安装PHP和Web环境</li></ol><h1 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h1><p>在安装之前，你需要确保服务器已安装以下环境：</p><ul><li>PHP和Web服务器（如Nginx/Apache）</li><li>数据库支持</li></ul><p>一切准备就绪后，就可以下载并开始安装了。</p><h1 id="安装与配置"><a href="#安装与配置" class="headerlink" title="安装与配置"></a>安装与配置</h1><p>从 <code>https://github.com/YOURLS/YOURLS</code> 下载最新的release，将主文件放入网站文件夹。</p><p>修改<code>user/config-sample.php</code>填入必需内容（<a href="https://yourls.org/#Config;configuration">详细</a>），修改文件名为<code>config.php</code></p><p>进入网站后台 <code>yourdomain/admin</code>，测试是否能使用。</p><p>搭建即完成。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>Yourls</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>使用 Github+jsdelivr 加速博客或是搭建图床、静态文件存储 教程及提醒</title>
+    <link href="/share-6.html"/>
+    <url>/share-6.html</url>
+    
+    <content type="html"><![CDATA[<h1 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h1><p>jsDelivr 是用于开源文件的免费 CDN。与 Github 和 npm 紧密集成，能够自动为几乎所有开源项目提供可靠的 CDN 服务。</p><blockquote><p>由于大批量的滥用，该服务已被限制。现已不推荐使用。</p></blockquote><p>限制：</p><ul><li>单文件大小不超过<code>20M</code></li><li>分支包文件大小不超过<code>50M</code>（该限制可申请解除）</li><li>部分可执行文件不提供CDN</li></ul><p>优势：</p><ul><li><p>有国内节点，速度友好</p></li><li><p>调用简单，只需要一个Github账号</p><span id="more"></span></li></ul><h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><p>有多种利用方式，首先是图床（<code>请注意: 根据用户协议，图床是不允许的</code>）、全站CSS和JS的加速（<code>可行</code>）、静态文件存储（<code>文本类</code>）。</p><h2 id="从图床开始"><a href="#从图床开始" class="headerlink" title="从图床开始"></a>从图床开始</h2><ol><li>准备</li></ol><p>*Github账号<br>打开 Github.com 去注册个账号，这一步不用我教也会吧</p><ol start="2"><li>创建仓库（repo）</li></ol><p>注册/登录完成后点击左上角的+号 选择 New repository<br>然后如图填入信息<br><img src="https://cdn.jsdelivr.net/gh/ShallowAi/imgbase@master/20200407133638.png" alt="img"></p><ol start="3"><li>上传文件<br>在这之后你就进入了新建后的repo界面<br>在界面内的绿色 Clone or download 的按钮旁边有一个 Upload files 的按钮，点击这个就能上传文件了，支持批量上传和拖拽，还可以写commit描述，上传完成之后点击下方的Commit changes就上传完成了</li></ol><ol start="4"><li>上传后的图片链接如何获取和加速？<br>首先这个是你的仓库（repo）地址<br><img src="https://cdn.jsdelivr.net/gh/ShallowAi/imgbase@master/20200407134345.png" alt="img"></li></ol><p>打码的是你的用户名，仓库名就是如图斜线后面的内容，分支默认是master</p><p>按照格式填入如下链接即可</p><p>加速后的链接（限制大小20M） <a href="https://cdn.jsdelivr.net/gh/用户名/仓库名@分支/文件名">https://cdn.jsdelivr.net/gh/用户名/仓库名@分支/文件名</a></p><p>全仓库预览（快速复制链接） <a href="https://cdn.jsdelivr.net/gh/用户名/仓库名@分支/">https://cdn.jsdelivr.net/gh/用户名/仓库名@分支/</a></p><h2 id="WordPress-全站CDN"><a href="#WordPress-全站CDN" class="headerlink" title="WordPress 全站CDN"></a>WordPress 全站CDN</h2><ol><li><p>准备</p><p>在开始之前，你需要选择一款WordPress的<code>缓存</code>或者<code>CDN</code>插件，本文以WP-Rocket为例子</p></li><li><p>文件的上传或者同步</p><p>将WordPress的<code>wp-content</code>目录建立为仓库，并使用Crontab新建定时任务同步到Github。</p></li><li><p>填写CDN地址</p><p>前者为地址，后者为类型，如果是全部上传就应该选择全部内容</p><p><img src="https://cdn.jsdelivr.net/gh/ShallowAi/imgbase@master/20201101205329.png" alt="img"></p></li></ol><h2 id="解除大小限制"><a href="#解除大小限制" class="headerlink" title="解除大小限制"></a>解除大小限制</h2><p>前往 <a href="https://github.com/jsdelivr/jsdelivr">https://github.com/jsdelivr/jsdelivr</a> 发布issue请求解除限制即可.</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>jsdelivr</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>免拆机开启小米路由器Telnet FTP 安装科学工具箱 刷入Breed</title>
+    <link href="/share-5.html"/>
+    <url>/share-5.html</url>
+    
+    <content type="html"><![CDATA[<p>基于小米路由器的Shell漏洞利用, 一键开启小米路由器Telnet FTP, 安装 </p><p> 实现科学上网及更多功能. 同时也可更换官方固件刷入Breed</p><span id="more"></span><h2 id="支持设备"><a href="#支持设备" class="headerlink" title="支持设备"></a>支持设备</h2><ul><li>小米路由器 4A/4C/4Q/4</li><li>小米路由器 3Gv2</li><li>小米路由器 3C</li></ul><h3 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h3><p>Python3</p><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>首先从这里 <a href="https://github.com/acecilia/OpenWRTInvasion/releases">https://github.com/acecilia/OpenWRTInvasion/releases</a> 下载最新的 Release 包.</p><p>下载后解压到任意文件夹，打开文件夹 按下 <code>Shift+右键</code> 选择 <code>在此处打开 PowerShell 窗口</code>或<code>在此处打开 命令提示符</code></p><p>运行指令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip3 install -r requirements.txt<br>python3 remote_command_execution_vulnerability.py<br></code></pre></td></tr></table></figure><p>会要求输入路由器的IP地址以及stok</p><p><img src="http://cdn.jsdelivr.net/gh/acecilia/OpenWRTInvasion@0.0.3/readme/exploit-002.gif" alt=""></p><p>完成后Telnet即已开启</p><p>使用Telnet工具链接即可 <code>telnet &lt;router_ip_address&gt;</code></p><p>用户名 <code>root</code>无密码，同时在21端口开启FTP服务，可通过FTP管理路由器文件。</p><h2 id="安装-MIXBOX"><a href="#安装-MIXBOX" class="headerlink" title="安装 MIXBOX"></a>安装 MIXBOX</h2><p>通过Telnet进入Shell，执行以下指令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sh -c &quot;$(curl -kfsSl https://cdn.jsdelivr.net/gh/monlor/mbfiles/install.sh)&quot; &amp;&amp; source /etc/profile &amp;&gt; /dev/null<br></code></pre></td></tr></table></figure><p>MIXBOX是一款基于Shell的小米路由器工具箱，原为Monlor-Tools，A tool box for XiaoMi Router base on Shell.</p><p>提供多种拓展工具 包含科技上网、KodExplorer、aria2等</p><h2 id="刷入Breed"><a href="#刷入Breed" class="headerlink" title="刷入Breed"></a>刷入Breed</h2><p>在路由器中通过wget从<a href="https://breed.hackpascal.net/">Breed官网</a>下载对应路由的Breed，刷入即可</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mtd -r write breed-mt7621-xiaomi-r3g.bin Bootloader<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>路由器</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>笔记本解锁功耗墙 安装最新版XTU</title>
+    <link href="/share-4.html"/>
+    <url>/share-4.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>夏天的来到，使得笔记本和手机的温度逐渐升高，对卡顿的感知似乎越来越强，笔记本又撞功耗墙又撞温度墙，太难了。</p><p>测试平台：Intel i7 8550U @ 1.8GHz</p><h3 id="安装最新版-XTU"><a href="#安装最新版-XTU" class="headerlink" title="安装最新版 XTU"></a>安装最新版 XTU</h3><p>最新版XTU屏蔽了大部分笔记本平台的处理器，但是仍有方法可以安装。</p><span id="more"></span><p>首先到Intel官网下载 <a href="https://downloadcenter.intel.com/download/29183/Intel-Extreme-Tuning-Utility-Intel-XTU">Intel® Extreme Tuning Utility</a> 双击打开安装，会提示 “<em>Attempted</em> <em>to</em> <em>install on</em> <em>an</em> <em>unsupported</em> <em>platform</em>“，此时不要点击确定。打开系统的临时文件目录 <code>%temp%</code> 寻找文件<code>Intel(R)_Extreme_Tuning_Utility_&#123;时间戳&#125;.log</code> 找到对应日志文件后双击打开，搜索 <code>Intel_XtuInstaller.msi</code> 寻找类似字段 <code>C:\ProgramData\Package Cache\&#123;UUID&#125;v6.5.2.40\Intel_XtuInstaller.msi</code>即为实际安装包位置。</p><p>以管理员身份启动命令提示符，键入以下指令</p><p><code>msiexec /i 你的安装包路径\Intel_XtuInstaller.msi DISABLEPLATFORMCHECK=1</code>  </p><p>完成安装，重启电脑。</p><p>启动程序。</p><p><img src="//cdn.jsdelivr.net/gh/ShallowAi/imgbase/hexo-content/20200707170042.png" alt=""></p><h3 id="解锁功耗墙"><a href="#解锁功耗墙" class="headerlink" title="解锁功耗墙"></a>解锁功耗墙</h3><p>打开<code>Advanced Tuning - All Controls</code> </p><p>更改 <code>Turbo Boost Short Power Max Enable</code> 为 <code>Disable</code></p><p>更改 <code>Turbo Boost Power Max</code> 的值为你所使用的笔记本在网络上推荐的功耗值。</p><p>例：i7 8550U 44W</p><h3 id="降压降温"><a href="#降压降温" class="headerlink" title="降压降温"></a>降压降温</h3><p>通过降低CPU电压以达到降温目的，若设定足够可在 -0.140V 以上调整（我只降到 -0.100V），降压后记得进行压力测试，长时间不蓝屏不死机才算稳定。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>技术分享</tag>
+      
+      <tag>CPU</tag>
+      
+      <tag>笔记本</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>UI/UX设计用字体分享</title>
+    <link href="/res-3.html"/>
+    <url>/res-3.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>字体设计与美术统一，不断追求</p><p>以下字体均为<code>开源</code>或<code>可免费商用</code>字体，若有区别会注明，长期收集更新</p><span id="more"></span><h3 id="思源黑体-Source-Han-Sans"><a href="#思源黑体-Source-Han-Sans" class="headerlink" title="思源黑体 Source Han Sans"></a>思源黑体 Source Han Sans</h3><p><img src="//cdn.jsdelivr.net/gh/ShallowAi/imgbase/20200606112630.png" alt=""></p><p><a href="https://github.com/adobe-fonts/source-han-sans">https://github.com/adobe-fonts/source-han-sans</a></p><h3 id="思源宋体-Source-Han-Serif"><a href="#思源宋体-Source-Han-Serif" class="headerlink" title="思源宋体 Source Han Serif"></a>思源宋体 Source Han Serif</h3><p><img src="//cdn.jsdelivr.net/gh/ShallowAi/imgbase/20200606112944.png" alt=""></p><p><a href="https://github.com/adobe-fonts/source-han-serif">https://github.com/adobe-fonts/source-han-serif</a></p><h3 id="思源等宽-Source-Han-Mono"><a href="#思源等宽-Source-Han-Mono" class="headerlink" title="思源等宽 Source Han Mono"></a>思源等宽 Source Han Mono</h3><p><img src="//cdn.jsdelivr.net/gh/ShallowAi/imgbase/hexo-content/20200610143527.png" alt=""></p><p><a href="https://github.com/adobe-fonts/source-han-mono">https://github.com/adobe-fonts/source-han-mono</a></p><h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>网络资源</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>字体</tag>
+      
+      <tag>UI</tag>
+      
+      <tag>UX</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>关于Hexo搭建的一些坑</title>
+    <link href="/share-2.html"/>
+    <url>/share-2.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>今天完成了Hexo博客的搭建，在搭建过程中有一些坑这里记录一下。</p><span id="more"></span><h3 id="永久链接"><a href="#永久链接" class="headerlink" title="永久链接"></a>永久链接</h3><p><code>permalink</code> 中的 :id 默认是随机生成的乱码 超级长 和Wordpress完全不同</p><p>所以设置了 :id 后 每篇文章需要在顶部加上 id: 值，以进行区分</p><h3 id="私有化部署"><a href="#私有化部署" class="headerlink" title="私有化部署"></a>私有化部署</h3><p>deploy 时需要先使用 <code>npm install hexo-deployer-git --save</code> 安装 hexo-deployer-git 后运行 <code>hexo clean &amp;&amp; hexo deploy</code></p><p>若不希望除页面以外的其他内容上传到Github的应使用私有化部署。</p><h3 id="自定义404错误页"><a href="#自定义404错误页" class="headerlink" title="自定义404错误页"></a>自定义404错误页</h3><p>上传一个404.html到repo根目录即可实现自定义404错误页面.</p><h3 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h3><p>执行 <code>hexo g</code> 生成最新的文件后, 执行<code>hexo server</code>启动本地服务器</p><h3 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h3><p>执行 <code>hexo new page categories</code> 新增分类目录<br>进入新增后的文件夹 <code>source/categories</code> 修改 index.md 为以下内容</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">分类</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020-05-29 19:00:00</span><br><span class="hljs-attr">type:</span> <span class="hljs-string">&quot;categories&quot;</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure><p>执行 <code>hexo new page tags</code> 新增标签目录<br>进入新增后的文件夹 <code>source/tags</code> 修改 index.md 为以下内容</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">标签</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020-05-29 19:00:00</span><br><span class="hljs-attr">type:</span> <span class="hljs-string">&quot;tags&quot;</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure><p>此后新建的文档 可使用<code>categories</code>自定义文章分类, <code>tags</code>定义标签. 例子如下</p><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs subunit">categories: 技术分享<br><span class="hljs-keyword">tags:</span><br>  - hexo<br>  - 网页搭建<br></code></pre></td></tr></table></figure><p>修改根目录的<code>_config.yml</code>, 使用<code>category_map</code>进行中英映射, 此后分类为分享即被映射为share, 而显示内容仍然为分享</p><figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><span class="hljs-attribute">category_map</span><span class="hljs-punctuation">:</span><br>  <span class="hljs-attribute">分享</span><span class="hljs-punctuation">:</span> <span class="hljs-string">share</span><br></code></pre></td></tr></table></figure><p>不进行映射, 将会使用输入的内容作为目录, 可能存在中文或符号的常见问题</p><h3 id="特殊标签"><a href="#特殊标签" class="headerlink" title="特殊标签"></a>特殊标签</h3><p><code>&lt;!-- more --&gt;</code> [阅读更多]标签</p><h3 id="CNAME"><a href="#CNAME" class="headerlink" title="CNAME"></a>CNAME</h3><p>请将<code>CNAME</code>文件放置于你的Hexo目录的source文件夹，保证每次deploy都能自动生成此文件，保证Github Pages解析生效。</p><blockquote><p>参阅</p></blockquote><p><a href="https://hexo.io/zh-cn/docs/github-pages">将 Hexo 部署到 Github Pages</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>hexo</tag>
+      
+      <tag>网页搭建</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/uncategorized-1.html"/>
+    <url>/uncategorized-1.html</url>
+    
+    <content type="html"><![CDATA[<h1 id="你好！世界"><a href="#你好！世界" class="headerlink" title="你好！世界"></a>你好！世界</h1><p>Hello world!</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
