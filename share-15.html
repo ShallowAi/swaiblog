@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"swai.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"swai.top","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          696 字
+          1.3k 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          6 分钟
+          11 分钟
         
       </span>
     
@@ -269,8 +269,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">Linux 进阶指令/文件记录</h1>
+            <h1 id="seo-header">Linux 进阶指令/文件记录</h1>
             
             
               <div class="markdown-body">
@@ -280,6 +279,13 @@
 
 <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="vnstat-网络流量监控"><a href="#vnstat-网络流量监控" class="headerlink" title="vnstat 网络流量监控"></a>vnstat 网络流量监控</h2><p>每天自动更新, 自带统计</p>
 <figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">Database updated: 2022-11-27 04:15:00<br><br>   eth0 since 2022-10-26<br><br>          rx:  43.72 GiB      tx:  828.52 GiB      total:  872.24 GiB<br><br>   monthly<br>                     rx      |<span class="hljs-string">     tx      </span>|<span class="hljs-string">    total    </span>|<span class="hljs-string">   avg. rate</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">       2022-11     43.72 GiB </span>|<span class="hljs-string">  828.52 GiB </span>|<span class="hljs-string">  872.24 GiB </span>|<span class="hljs-string">    3.31 Mbit/s</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     estimated     50.10 GiB </span>|<span class="hljs-string">  949.52 GiB </span>|<span class="hljs-string">  999.63 GiB </span>|<br><br>   daily<br>                     rx      |<span class="hljs-string">     tx      </span>|<span class="hljs-string">    total    </span>|<span class="hljs-string">   avg. rate</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     yesterday      8.41 GiB </span>|<span class="hljs-string">  264.23 GiB </span>|<span class="hljs-string">  272.64 GiB </span>|<span class="hljs-string">   27.11 Mbit/s</span><br><span class="hljs-string">         today    405.98 MiB </span>|<span class="hljs-string">    8.53 GiB </span>|<span class="hljs-string">    8.93 GiB </span>|<span class="hljs-string">    5.01 Mbit/s</span><br><span class="hljs-string">     ------------------------+-------------+-------------+---------------</span><br><span class="hljs-string">     estimated      2.24 GiB </span>|<span class="hljs-string">   48.17 GiB </span>|<span class="hljs-string">   50.41 GiB </span>|<br></code></pre></td></tr></table></figure>
+
+<h2 id="dmidecode"><a href="#dmidecode" class="headerlink" title="dmidecode"></a>dmidecode</h2><p>使用 dmidecode 查看当前内存的相关信息，如运行频率和型号等，仅适用于物理机。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">dmidecode --<span class="hljs-built_in">type</span> 17</span><br></code></pre></td></tr></table></figure>
+
+<p>执行结果</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs text">Getting SMBIOS data from sysfs.<br>SMBIOS 3.0.0 present.<br><br>Handle 0x005B, DMI type 17, 40 bytes<br>Memory Device<br>	Array Handle: 0x0056<br>	Error Information Handle: Not Provided<br>	Total Width: 72 bits<br>	Data Width: 72 bits<br>	Size: 16 GB<br>	Form Factor: DIMM<br>	Set: None<br>	Locator: DIMM_B1<br>	Bank Locator: NODE 1<br>	Type: DDR3<br>	Type Detail: Synchronous<br>	Speed: 1067 MT/s<br>	Manufacturer: Hynix Semiconductor<br>	Serial Number: 23A8E73D<br>	Asset Tag: DIMM_B1_AssetTag<br>	Part Number: ********-** <br>	Rank: 4<br>	Configured Memory Speed: 1333 MT/s<br>	Minimum Voltage: Unknown<br>	Maximum Voltage: Unknown<br>	Configured Voltage: Unknown<br></code></pre></td></tr></table></figure>
+
 
                 
               </div>
@@ -313,9 +319,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/share/">#技术分享</a>
+        <a href="/tags/share/" class="print-no-link">#技术分享</a>
       
-        <a href="/tags/Linux/">#Linux</a>
+        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
       
     </div>
   
@@ -351,7 +357,7 @@
             
               
               
-                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
                   <span class="hint--top hint--rounded" aria-label="BY - 署名">
                     <i class="iconfont icon-by"></i>
                   </span>
@@ -372,9 +378,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/share-9.html" title="Linux 常用指令/文件记录">
+                      <a href="/share-10.html" title="Linux Samba 安装配置避坑记录">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux 常用指令/文件记录</span>
+                        <span class="hidden-mobile">Linux Samba 安装配置避坑记录</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -382,8 +388,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/share-8.html" title="充分利用闲置带宽 挂机甜糖赚回电费完整教程">
-                        <span class="hidden-mobile">充分利用闲置带宽 挂机甜糖赚回电费完整教程</span>
+                      <a href="/share-9.html" title="Linux 常用指令/文件记录">
+                        <span class="hidden-mobile">Linux 常用指令/文件记录</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -70,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"swai.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"swai.top","root":"/","version":"1.9.5","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"gtag":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          914 字
+          920 字
         
       </span>
     
@@ -269,8 +269,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <!-- SEO header -->
-            <h1 style="display: none">关于Hexo搭建的一些坑</h1>
+            <h1 id="seo-header">关于Hexo搭建的一些坑</h1>
             
             
               <div class="markdown-body">
@@ -282,7 +281,7 @@
 <p>所以设置了 :id 后 每篇文章需要在顶部加上 id: 值，以进行区分</p>
 <h3 id="私有化部署"><a href="#私有化部署" class="headerlink" title="私有化部署"></a>私有化部署</h3><p>deploy 时需要先使用 <code>npm install hexo-deployer-git --save</code> 安装 hexo-deployer-git 后运行 <code>hexo clean &amp;&amp; hexo deploy</code></p>
 <p>若不希望除页面以外的其他内容上传到Github的应使用私有化部署。</p>
-<h3 id="自定义404错误页"><a href="#自定义404错误页" class="headerlink" title="自定义404错误页"></a>自定义404错误页</h3><p>上传一个404.html到repo根目录即可实现自定义404错误页面.</p>
+<h3 id="自定义404错误页"><a href="#自定义404错误页" class="headerlink" title="自定义404错误页"></a>自定义404错误页</h3><p>上传一个404.html到 hexo的<code>source</code>目录即可实现自定义404错误页面.</p>
 <h3 id="本地测试"><a href="#本地测试" class="headerlink" title="本地测试"></a>本地测试</h3><p>执行 <code>hexo g</code> 生成最新的文件后, 执行<code>hexo server</code>启动本地服务器</p>
 <h3 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h3><p>执行 <code>hexo new page categories</code> 新增分类目录<br>进入新增后的文件夹 <code>source/categories</code> 修改 index.md 为以下内容</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-meta">---</span><br><span class="hljs-attr">title:</span> <span class="hljs-string">分类</span><br><span class="hljs-attr">date:</span> <span class="hljs-number">2020-05-29 19:00:00</span><br><span class="hljs-attr">type:</span> <span class="hljs-string">&quot;categories&quot;</span><br><span class="hljs-meta">---</span><br></code></pre></td></tr></table></figure>
@@ -298,7 +297,7 @@
 
 <p>不进行映射, 将会使用输入的内容作为目录, 可能存在中文或符号的常见问题</p>
 <h3 id="特殊标签"><a href="#特殊标签" class="headerlink" title="特殊标签"></a>特殊标签</h3><p><code>&lt;!-- more --&gt;</code> [阅读更多]标签</p>
-<h3 id="CNAME"><a href="#CNAME" class="headerlink" title="CNAME"></a>CNAME</h3><p>请将<code>CNAME</code>文件放置于你的Hexo目录的source文件夹，保证每次deploy都能自动生成此文件，保证Github Pages解析生效。</p>
+<h3 id="CNAME"><a href="#CNAME" class="headerlink" title="CNAME"></a>CNAME</h3><p>请将<code>CNAME</code>文件放置于你的Hexo目录的<code>source</code>文件夹，保证每次deploy都能自动生成此文件，保证Github Pages解析生效。</p>
 <blockquote>
 <p>参阅</p>
 </blockquote>
@@ -336,9 +335,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/hexo/">#hexo</a>
+        <a href="/tags/hexo/" class="print-no-link">#hexo</a>
       
-        <a href="/tags/%E7%BD%91%E9%A1%B5%E6%90%AD%E5%BB%BA/">#网页搭建</a>
+        <a href="/tags/%E7%BD%91%E9%A1%B5%E6%90%AD%E5%BB%BA/" class="print-no-link">#网页搭建</a>
       
     </div>
   
@@ -374,7 +373,7 @@
             
               
               
-                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
                   <span class="hint--top hint--rounded" aria-label="BY - 署名">
                     <i class="iconfont icon-by"></i>
                   </span>
