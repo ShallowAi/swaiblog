@@ -16,26 +16,25 @@
   <meta name="author" content="ShallowAi">
   <meta name="keywords" content="">
   
-    <meta name="description" content="引入夏天的来到，使得笔记本和手机的温度逐渐升高，对卡顿的感知似乎越来越强，笔记本又撞功耗墙又撞温度墙，太难了。 测试平台：Intel i7 8550U @ 1.8GHz 安装最新版 XTU最新版XTU屏蔽了大部分笔记本平台的处理器，但是仍有方法可以安装。">
+    <meta name="description" content="网站项目中一个重要的泛域名证书过期后, 由于更换了域名的托管服务商, 需要重新通过acme.sh配置申请信息，网站重新配置新的证书后仍然无法调用对应接口, 报错 1javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.securit">
 <meta property="og:type" content="article">
-<meta property="og:title" content="笔记本解锁功耗墙 安装最新版XTU">
-<meta property="og:url" content="https://swai.top/share-4.html">
+<meta property="og:title" content="解决在证书配置不当时的 SSLHandshakeException PKIX path building failed">
+<meta property="og:url" content="https://swai.top/share-19.html">
 <meta property="og:site_name" content="ShallowAi&#39;s Blog">
-<meta property="og:description" content="引入夏天的来到，使得笔记本和手机的温度逐渐升高，对卡顿的感知似乎越来越强，笔记本又撞功耗墙又撞温度墙，太难了。 测试平台：Intel i7 8550U @ 1.8GHz 安装最新版 XTU最新版XTU屏蔽了大部分笔记本平台的处理器，但是仍有方法可以安装。">
+<meta property="og:description" content="网站项目中一个重要的泛域名证书过期后, 由于更换了域名的托管服务商, 需要重新通过acme.sh配置申请信息，网站重新配置新的证书后仍然无法调用对应接口, 报错 1javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.securit">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ShallowAi/imgbase/hexo-content/20200707170042.png">
-<meta property="article:published_time" content="2020-07-07T08:38:16.000Z">
-<meta property="article:modified_time" content="2020-07-07T08:38:16.000Z">
+<meta property="article:published_time" content="2023-10-03T14:26:33.866Z">
+<meta property="article:modified_time" content="2023-10-03T14:26:33.866Z">
 <meta property="article:author" content="ShallowAi">
-<meta property="article:tag" content="CPU">
-<meta property="article:tag" content="技术分享">
-<meta property="article:tag" content="笔记本">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="TLS">
+<meta property="article:tag" content="Exception">
+<meta property="article:tag" content="acme.sh">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ShallowAi/imgbase/hexo-content/20200707170042.png">
   
   
   
-  <title>笔记本解锁功耗墙 安装最新版XTU - ShallowAi&#39;s Blog</title>
+  <title>解决在证书配置不当时的 SSLHandshakeException PKIX path building failed - ShallowAi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="笔记本解锁功耗墙 安装最新版XTU"></span>
+            <span id="subtitle" data-typed-text="解决在证书配置不当时的 SSLHandshakeException PKIX path building failed"></span>
           
         </div>
 
@@ -212,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2020-07-07 16:38" pubdate>
-          2020年7月7日 下午
+        <time datetime="2023-10-03 22:26" pubdate>
+          2023年10月3日 晚上
         </time>
       </span>
     
@@ -224,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          724 字
+          1.2k 字
         
       </span>
     
@@ -235,7 +234,7 @@
         
         
         
-          7 分钟
+          11 分钟
         
       </span>
     
@@ -272,27 +271,31 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">笔记本解锁功耗墙 安装最新版XTU</h1>
+            <h1 id="seo-header">解决在证书配置不当时的 SSLHandshakeException PKIX path building failed</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p>夏天的来到，使得笔记本和手机的温度逐渐升高，对卡顿的感知似乎越来越强，笔记本又撞功耗墙又撞温度墙，太难了。</p>
-<p>测试平台：Intel i7 8550U @ 1.8GHz</p>
-<h3 id="安装最新版-XTU"><a href="#安装最新版-XTU" class="headerlink" title="安装最新版 XTU"></a>安装最新版 XTU</h3><p>最新版XTU屏蔽了大部分笔记本平台的处理器，但是仍有方法可以安装。</p>
+                <p>网站项目中一个重要的泛域名证书过期后, 由于更换了域名的托管服务商, 需要重新通过acme.sh配置申请信息，网站重新配置新的证书后仍然无法调用对应接口, 报错</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target<br></code></pre></td></tr></table></figure>
+
+<p>但是通过浏览器是能够正常访问网页且不会报证书相关的错误的，后续发现是配置的证书链不完整导致的。</p>
 <span id="more"></span>
 
-<p>首先到Intel官网下载 <a target="_blank" rel="noopener" href="https://downloadcenter.intel.com/download/29183/Intel-Extreme-Tuning-Utility-Intel-XTU">Intel® Extreme Tuning Utility</a> 双击打开安装，会提示 “<em>Attempted</em> <em>to</em> <em>install on</em> <em>an</em> <em>unsupported</em> <em>platform</em>“，此时不要点击确定。打开系统的临时文件目录 <code>%temp%</code> 寻找文件<code>Intel(R)_Extreme_Tuning_Utility_&#123;时间戳&#125;.log</code> 找到对应日志文件后双击打开，搜索 <code>Intel_XtuInstaller.msi</code> 寻找类似字段 <code>C:\ProgramData\Package Cache\&#123;UUID&#125;v6.5.2.40\Intel_XtuInstaller.msi</code>即为实际安装包位置。</p>
-<p>以管理员身份启动命令提示符，键入以下指令</p>
-<p><code>msiexec /i 你的安装包路径\Intel_XtuInstaller.msi DISABLEPLATFORMCHECK=1</code>  </p>
-<p>完成安装，重启电脑。</p>
-<p>启动程序。</p>
-<p><img src="//cdn.jsdelivr.net/gh/ShallowAi/imgbase/hexo-content/20200707170042.png" srcset="/img/loading.gif" lazyload alt=""></p>
-<h3 id="解锁功耗墙"><a href="#解锁功耗墙" class="headerlink" title="解锁功耗墙"></a>解锁功耗墙</h3><p>打开<code>Advanced Tuning - All Controls</code> </p>
-<p>更改 <code>Turbo Boost Short Power Max Enable</code> 为 <code>Disable</code></p>
-<p>更改 <code>Turbo Boost Power Max</code> 的值为你所使用的笔记本在网络上推荐的功耗值。</p>
-<p>例：i7 8550U 44W</p>
-<h3 id="降压降温"><a href="#降压降温" class="headerlink" title="降压降温"></a>降压降温</h3><p>通过降低CPU电压以达到降温目的，若设定足够可在 -0.140V 以上调整（我只降到 -0.100V），降压后记得进行压力测试，长时间不蓝屏不死机才算稳定。</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h3 id="证书重新申请"><a href="#证书重新申请" class="headerlink" title="证书重新申请"></a>证书重新申请</h3><p>网站证书过期后，更换了域名的服务商（从国内服务商迁移到国外），为了防止旧的acme.sh配置影响后续的续期，直接删除了现有已过期的证书。</p>
+<p>在这之后重新配置了Cloudflare的API密钥和Token，通过acme.sh进行了泛域名证书的申请。</p>
+<p>完成证书申请后获得了包含域名命名（此处以<code>example.com</code>举例）的下列文件：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">ca.cer # CA证书<br>fullchain.cer # 完整链证书（CA+域名）<br>example.com.cer # 域名证书<br>example.com.key # 私钥<br>example.com.csr<br>example.com.conf<br>example.com.csr.conf<br></code></pre></td></tr></table></figure>
+
+<h3 id="错误配置"><a href="#错误配置" class="headerlink" title="错误配置"></a>错误配置</h3><p>删除了旧Nginx的TLS配置后，自认为现在可以直接使用域名证书，进行了如下的重新配置。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ssl_certificate</span> /usr/local/ssl/example.com.cer;<br><span class="hljs-attribute">ssl_certificate_key</span> /usr/local/ssl/example.com.key;<br></code></pre></td></tr></table></figure>
+
+<p>完成以上操作后执行并重启了服务。</p>
+<h3 id="问题发生"><a href="#问题发生" class="headerlink" title="问题发生"></a>问题发生</h3><p>更换完续期后的证书，API接口仍然无法通过Java访问，报错<code>PKIX path building failed</code>，但是通过浏览器是能够正常访问网页且不会报证书相关的错误的。遂通过网络搜索相关问题，大多数是将证书存入本地的信任存储、或者直接忽略证书验证。这样对于一个登录接口显然是不安全的。</p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>经过仔细的检查，旧的配置使用的是完整链（包含CA），将配置文件中的证书路径指向<code>fullchain.cer</code>，重启服务后，恢复正常。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ssl_certificate</span> /usr/local/ssl/fullchain.cer;<br><span class="hljs-attribute">ssl_certificate_key</span> /usr/local/ssl/example.com.key;<br></code></pre></td></tr></table></figure>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>申请的证书在设置时推荐使用完整链的证书文件，如本文中提到的<code>fullchain.cer</code>。</p>
+<p>总而言之，浏览器可能忽略了一些东西，导致现在即使不包含CA，浏览器也不会认为有问题，但是如如果代码出问题了，相信你的代码没有写错。</p>
 
                 
               </div>
@@ -326,11 +329,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/CPU/" class="print-no-link">#CPU</a>
+        <a href="/tags/Java/" class="print-no-link">#Java</a>
       
-        <a href="/tags/share/" class="print-no-link">#技术分享</a>
+        <a href="/tags/TLS/" class="print-no-link">#TLS</a>
       
-        <a href="/tags/laptop/" class="print-no-link">#笔记本</a>
+        <a href="/tags/Exception/" class="print-no-link">#Exception</a>
+      
+        <a href="/tags/acme-sh/" class="print-no-link">#acme.sh</a>
       
     </div>
   
@@ -342,8 +347,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>笔记本解锁功耗墙 安装最新版XTU</div>
-      <div>https://swai.top/share-4.html</div>
+      <div>解决在证书配置不当时的 SSLHandshakeException PKIX path building failed</div>
+      <div>https://swai.top/share-19.html</div>
     </div>
     <div class="license-meta">
       
@@ -355,7 +360,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2020年7月7日</div>
+          <div>2023年10月3日</div>
         </div>
       
       
@@ -387,18 +392,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/share-5.html" title="免拆机开启小米路由器Telnet FTP 安装科学工具箱 刷入Breed">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">免拆机开启小米路由器Telnet FTP 安装科学工具箱 刷入Breed</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/resource-3.html" title="UI/UX设计用字体分享">
-                        <span class="hidden-mobile">UI/UX设计用字体分享</span>
+                      <a href="/share-17.html" title="Rust 初体验">
+                        <span class="hidden-mobile">Rust 初体验</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
