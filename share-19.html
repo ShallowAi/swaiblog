@@ -18,7 +18,7 @@
   
     <meta name="description" content="网站项目中一个重要的泛域名证书过期后, 由于更换了域名的托管服务商, 需要重新通过acme.sh配置申请信息，网站重新配置新的证书后仍然无法调用对应接口, 报错 1javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.securit">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决在证书配置不当时的 SSLHandshakeException PKIX path building failed">
+<meta property="og:title" content="解决在证书配置不当时的 x509 SSLHandshakeException PKIX path building failed">
 <meta property="og:url" content="https://swai.top/share-19.html">
 <meta property="og:site_name" content="ShallowAi&#39;s Blog">
 <meta property="og:description" content="网站项目中一个重要的泛域名证书过期后, 由于更换了域名的托管服务商, 需要重新通过acme.sh配置申请信息，网站重新配置新的证书后仍然无法调用对应接口, 报错 1javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.securit">
@@ -34,7 +34,7 @@
   
   
   
-  <title>解决在证书配置不当时的 SSLHandshakeException PKIX path building failed - ShallowAi&#39;s Blog</title>
+  <title>解决在证书配置不当时的 x509 SSLHandshakeException PKIX path building failed - ShallowAi&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="解决在证书配置不当时的 SSLHandshakeException PKIX path building failed"></span>
+            <span id="subtitle" data-typed-text="解决在证书配置不当时的 x509 SSLHandshakeException PKIX path building failed"></span>
           
         </div>
 
@@ -271,7 +271,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">解决在证书配置不当时的 SSLHandshakeException PKIX path building failed</h1>
+            <h1 id="seo-header">解决在证书配置不当时的 x509 SSLHandshakeException PKIX path building failed</h1>
             
             
               <div class="markdown-body">
@@ -295,7 +295,7 @@
 <h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>经过仔细的检查，旧的配置使用的是完整链（包含CA），将配置文件中的证书路径指向<code>fullchain.cer</code>，重启服务后，恢复正常。</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">ssl_certificate</span> /usr/local/ssl/fullchain.cer;<br><span class="hljs-attribute">ssl_certificate_key</span> /usr/local/ssl/example.com.key;<br></code></pre></td></tr></table></figure>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>申请的证书在设置时推荐使用完整链的证书文件，如本文中提到的<code>fullchain.cer</code>。</p>
-<p>总而言之，浏览器可能忽略了一些东西，导致现在即使不包含CA，浏览器也不会认为有问题，但是如如果代码出问题了，相信你的代码没有写错。</p>
+<p>总而言之，浏览器可能忽略了一些东西，导致现在即使不包含CA，浏览器也不会认为有问题，但是如果代码突然出错了，先相信你的代码没有写错，再去排除问题。</p>
 
                 
               </div>
@@ -347,7 +347,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>解决在证书配置不当时的 SSLHandshakeException PKIX path building failed</div>
+      <div>解决在证书配置不当时的 x509 SSLHandshakeException PKIX path building failed</div>
       <div>https://swai.top/share-19.html</div>
     </div>
     <div class="license-meta">
